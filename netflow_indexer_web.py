@@ -3,7 +3,7 @@ import sys
 from netflowindexer import config
 from netflowindexer.main import get_searcher
 import glob
-from bottle import Bottle, run, request
+from bottle import Bottle, run, request, response
 
 CONFIG_FILE = "/data/nfdump_xap/nfdump.ini"
 
@@ -19,6 +19,7 @@ def do_search(indexer_type, database, ips, dump=None,filter=None):
 
 @app.route("/search")
 def search():
+    response.content_type = "text/plain"
     ip   = request.GET.get('ip')
     dump = request.GET.get('dump', False)
     cfgdata = config.read_config(CONFIG_FILE)
