@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import sys
 from netflowindexer import config
-from netflowindexer.main import do_search
+from netflowindexer.main import get_searcher
 import glob
 from bottle import Bottle, run, request
 
@@ -10,6 +10,12 @@ CONFIG_FILE = "/data/nfdump_xap/nfdump.ini"
 #import bottle
 #bottle.debug(True)
 app = Bottle()
+
+def do_search(indexer_type, database, ips, dump=None,filter=None):
+    searcher = get_searcher(indexer_type)
+    s = searcher(database)
+    return s.search(ips, dump, filter)
+
 
 @app.route("/search")
 def search():
