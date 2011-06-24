@@ -25,7 +25,7 @@ def search():
     cfgdata = config.read_config(CONFIG_FILE)
     for db in sorted(glob.glob(cfgdata['dbpath'] + "/*.db")):
         for line in do_search(cfgdata['indexer'], db, [ip], dump):
-            yield line + "\n"
+            yield str(line) + "\n"
 
 @app.get("")
 @app.get("/")
