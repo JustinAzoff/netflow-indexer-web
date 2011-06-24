@@ -4,6 +4,7 @@ from netflowindexer import config
 from netflowindexer.main import get_searcher
 import glob
 from bottle import Bottle, run, request, response
+import re
 
 CONFIG_FILE = "/data/nfdump_xap/nfdump.ini"
 
@@ -20,11 +21,17 @@ def do_search(indexer_type, database, ips, dump=None,filter=None):
 @app.route("/search")
 def search():
     response.content_type = "text/plain"
-    ip   = request.GET.get('ip')
+    ip   = request.GET.get('ip','').strip()
+    if not ip:
+        yield 'missing ip parameter'
+        return
+    ips = re.split("[, ]+", ip)
+
     dump = request.GET.get('dump', False)
     cfgdata = config.read_config(CONFIG_FILE)
+
     for db in sorted(glob.glob(cfgdata['dbpath'] + "/*.db")):
-        for line in do_search(cfgdata['indexer'], db, [ip], dump):
+        for line in do_search(cfgdata['indexer'], db, ips, dump):
             yield str(line) + "\n"
 
 @app.get("")
@@ -34,12 +41,12 @@ def form():
     return """
 <html>
 <body>
-
+<h1>Netflow-Indexer Search</h1>
 <form action="search">
 <fieldset>
 <legend>Search Netflow</legend>
 <label for="ip">Address</dump>
-<input type="text" name="ip" id="ip" /> <br />
+<input type="text" name="ip" id="ip" size="80" /> <br />
 
 <label for="dump">Dump?</dump>
 <input type="checkbox" name="dump" id="dump" /> <br />
