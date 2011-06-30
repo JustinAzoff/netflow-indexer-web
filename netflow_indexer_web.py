@@ -78,10 +78,10 @@ def form():
     databases = s.list_databases()
     return template(TEMPLATE, databases=databases)
 
-def main(config):
+def main():
+    config = sys.argv[1]
     app.config['nfi_config'] = config
     run(app, server='auto', port=8000)
 
 if __name__ == "__main__":
-    config = sys.argv[1]
-    main(config)
+    main()
