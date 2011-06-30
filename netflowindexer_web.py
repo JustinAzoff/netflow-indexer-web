@@ -58,7 +58,7 @@ label {
 <label for="databases">Limit Databases?</label> <br>
 <select id="databases" name="databases" multiple="multiple" size=50>
 %for d in databases:
-    <option value="{{d}}">{{d}}</option>
+    <option value="{{d}}">{{d.split("/")[-1]}}</option>
 %end for
 </select> <br>
 </form>
