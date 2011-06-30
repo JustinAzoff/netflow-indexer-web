@@ -3,7 +3,7 @@ import sys, os
 from glob import glob
 
 
-version = '0.1'
+version = '0.2'
 
 setup(name='netflowindexer_web',
     version=version,
@@ -22,7 +22,7 @@ setup(name='netflowindexer_web',
     zip_safe=False,
     install_requires=[
         "bottle",
-        "netflowindexer>=0.1.18",
+        "netflowindexer>=0.1.21",
     ],
     scripts=glob('scripts/*'),
     entry_points = {
