@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import sys
 from netflowindexer import Searcher
-from bottle import Bottle, run, request, response
+from bottle import Bottle, run, request, response, redirect, request
 from bottle import template
 import re
 
@@ -70,10 +70,11 @@ document.getElementById("databases").options[0].selected=false;
 """
 
 
-@app.get("")
 @app.get("/")
 @app.get("/form")
 def form():
+    if request.environ['PATH_INFO']=='':
+        return redirect(request.environ['REQUEST_URI'] + '/')
     s = Searcher(app.config['nfi_config'])
     databases = s.list_databases()
     return template(TEMPLATE, databases=databases)
