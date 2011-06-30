@@ -32,6 +32,7 @@ def search():
                 yield str(line) + "\n"
 
 TEMPLATE = """
+<!DOCTYPE html>
 <html>
 <head>
 <style type="text/css">
@@ -46,15 +47,15 @@ label {
 <fieldset>
 <legend>Search Netflow</legend>
 <label for="ip">One or more addresses</label> <br>
-<input type="text" name="ip" id="ip" size="80" /> <br>
+<input type="search" name="ip" id="ip" size="80" required autofocus> <br>
 
 <label for="filter">Optional filter</label> <br>
-<input type="text" name="filter" id="filter" size="80" /> <br>
+<input type="search" name="filter" id="filter" size="80" placeholder="Example: 'dst port 22'"> <br>
 
 <label for="dump">Dump records?</label> <br>
-<input type="checkbox" name="dump" id="dump" /> <br>
+<input type="checkbox" name="dump" id="dump"> <br>
 
-<input type="submit" value="Search"/> <br/>
+<input type="submit" value="Search"> <br>
 <label for="databases">Limit Databases?</label> <br>
 <select id="databases" name="databases" multiple="multiple" size=50>
 %for d in databases:
