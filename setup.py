@@ -17,7 +17,7 @@ setup(name='netflowindexer_web',
     url='',
     license='MIT',
     packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
-    py_modules=['netflow_indexer_web'],
+    py_modules=['netflowindexer_web'],
     include_package_data=True,
     zip_safe=False,
     install_requires=[
@@ -27,7 +27,7 @@ setup(name='netflowindexer_web',
     scripts=glob('scripts/*'),
     entry_points = {
         'console_scripts': [
-            'netflow-indexer-web = netflow_indexer_web:main',
+            'netflow-indexer-web = netflowindexer_web:main',
         ]
     },
     )
