@@ -3,7 +3,7 @@ import sys, os
 from glob import glob
 
 
-version = '0.5'
+version = '0.6'
 
 setup(name='netflowindexer_web',
     version=version,
