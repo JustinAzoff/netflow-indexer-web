@@ -70,12 +70,19 @@ document.getElementById("databases").options[0].selected=false;
 </html>
 """
 
+def fix_path(request):
+    uri = request.environ['REQUEST_URI']
+    if '?' in uri:
+        new = uri.replace("?", "/?")
+    else:
+        new = uri + '/'
+    return redirect(new)
 
 @app.get("/")
 @app.get("/form")
 def form():
     if request.environ['PATH_INFO']=='':
-        return redirect(request.environ['REQUEST_URI'] + '/')
+        return fix_path(request)
     s = Searcher(app.config['nfi_config'])
     databases = s.list_databases()
     return template(TEMPLATE, databases=databases)
