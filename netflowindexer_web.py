@@ -7,7 +7,7 @@ import re
 
 
 import bottle
-#bottle.debug(True)
+bottle.debug(True)
 app = Bottle()
 
 @app.route("/search")
@@ -39,24 +39,55 @@ TEMPLATE = """
 label {
     font-weight: bold;
 }
+legend {
+    font-weight: bold;
+}
+body {
+    background: #2C4762;
+}
+#content {
+    width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 20px;
+    background: #f0f4f8;
+    padding: 20px;
+}
+input {
+    border: 2px solid #2C4762;
+    padding: 2px;
+}
+input:focus {
+    border: 2px solid green;
+}
+input[type=submit]:hover {
+    background: #2C4762;
+    color: #f0f4f8;
+}
+input {
+    margin-bottom: 5px;
+}
+
+
 </style>
 </head>
 <body>
+<div id="content">
 <h1>Netflow-Indexer Search</h1>
 <form action="search">
 <fieldset>
 <legend>Search Netflow</legend>
-<label for="ip">One or more addresses</label> <br>
+<label for="ip">One or more addresses separated by space or '+'. Cidr blocks(192.168.1.0/24) are allowed</label> <br>
 <input type="search" name="ip" id="ip" size="80" required autofocus> <br>
 
 <label for="filter">Optional filter</label> <br>
 <input type="search" name="filter" id="filter" size="80" placeholder="Example: 'dst port 22'"> <br>
 
-<label for="dump">Dump records?</label> <br>
+<label for="dump">Dump full netflow records ?</label> <br>
 <input type="checkbox" name="dump" id="dump"> <br>
 
 <input type="submit" value="Search"> <br>
-<label for="databases">Limit Databases?</label> <br>
+<label for="databases">Limit Databases to:</label> <br>
 <select id="databases" name="databases" multiple="multiple" size=50>
 %for d in databases:
     <option value="{{d}}">{{d.split("/")[-1]}}</option>
@@ -66,6 +97,7 @@ label {
 <script>
 document.getElementById("databases").options[0].selected=false;
 </script>
+</div>
 </body>
 </html>
 """
