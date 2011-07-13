@@ -35,6 +35,7 @@ TEMPLATE = """
 <!DOCTYPE html>
 <html>
 <head>
+<title> Netflow Search </title>
 <style type="text/css">
 label {
     font-weight: bold;
