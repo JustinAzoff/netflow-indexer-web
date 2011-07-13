@@ -70,6 +70,15 @@ input {
 
 
 </style>
+<script>
+function toggle_filter()
+{
+ var dump = document.getElementById("dump")
+ var filter = document.getElementById("filter")
+ var elm = document.getElementById("filter_option")
+ elm.style.display = dump.checked? "":"none"
+}
+</script>
 </head>
 <body>
 <div id="content">
@@ -80,12 +89,13 @@ input {
 <label for="ip">One or more addresses separated by space or '+'. Cidr blocks(192.168.1.0/24) are allowed</label> <br>
 <input type="search" name="ip" id="ip" size="80" required autofocus> <br>
 
+<label for="dump">Dump full netflow records ?</label> <br>
+<input type="checkbox" name="dump" id="dump" onclick="toggle_filter()"> <br>
+
+<div id="filter_option" style="display:none;">
 <label for="filter">Optional filter</label> <br>
 <input type="search" name="filter" id="filter" size="80" placeholder="Example: 'dst port 22'"> <br>
-
-<label for="dump">Dump full netflow records ?</label> <br>
-<input type="checkbox" name="dump" id="dump"> <br>
-
+</div>
 <input type="submit" value="Search"> <br>
 <label for="databases">Limit Databases to:</label> <br>
 <select id="databases" name="databases" multiple="multiple" size=50>
