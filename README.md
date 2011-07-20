@@ -11,6 +11,11 @@ Usage
 CGI usage
 ---------
 
+    #!/usr/local/python_env/bin/python
+    # - change accordingly
+    # - in apache config: 
+    #   ScriptAlias /nfs /usr/lib/cgi-bin/netflow_index_search.py
+
     from netflowindexer_web import app, set_config_file, run
 
     set_config_file("/path/to/netflow-indexer-config-file.ini")
