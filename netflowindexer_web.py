@@ -8,7 +8,7 @@ import re
 
 
 import bottle
-bottle.debug(True)
+#bottle.debug(True)
 app = Bottle()
 
 def filter_databases(wanted_databases, all_databases):
