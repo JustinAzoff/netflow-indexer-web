@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import sys
+import os
 from netflowindexer import Searcher
 from bottle import Bottle, run, request, response, redirect, request
 from bottle import template
@@ -9,6 +10,11 @@ import re
 import bottle
 bottle.debug(True)
 app = Bottle()
+
+def filter_databases(wanted_databases, all_databases):
+    wanted = set(wanted_databases)
+    expanded = [d for d in all_databases if os.path.basename(d) in wanted]
+    return expanded
 
 @app.route("/search")
 def search():
@@ -24,10 +30,13 @@ def search():
     dump = request.GET.get('dump', False)
 
     s = Searcher(app.config['nfi_config'])
+    all_databases = s.list_databases()
     if not databases:
-        databases = s.list_databases()
+        search_databases = all_databases
+    else:
+        search_databases = filter_databases(databases, all_databases)
 
-    for d in databases:
+    for d in search_databases:
         for line in s.search(d, ips, dump, filter):
                 yield str(line) + "\n"
 
@@ -101,7 +110,7 @@ function toggle_filter()
 <label for="databases">Limit Databases to:</label> <br>
 <select id="databases" name="databases" multiple="multiple" size=50>
 %for d in databases:
-    <option value="{{d}}">{{d.split("/")[-1]}}</option>
+    <option value="{{d}}">{{d}}</option>
 %end for
 </select> <br>
 </form>
@@ -127,7 +136,7 @@ def form():
     if request.environ['PATH_INFO']=='':
         return fix_path(request)
     s = Searcher(app.config['nfi_config'])
-    databases = s.list_databases()
+    databases = map(os.path.basename, s.list_databases())
     return template(TEMPLATE, databases=databases)
 
 def set_config_file(filename):
