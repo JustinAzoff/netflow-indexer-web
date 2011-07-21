@@ -40,6 +40,38 @@ def search():
         for line in s.search(d, ips, dump, filter):
                 yield str(line) + "\n"
 
+def iter_len(it):
+    x = 0
+    for _ in it:
+        x+=1
+    return x
+
+@app.route("/stats")
+def stats():
+    ip = request.GET.get('ip','').strip()
+    if not ip:
+        return {}
+    ips = re.split("[, ]+", ip)
+
+    s = Searcher(app.config['nfi_config'])
+    databases = s.list_databases()
+
+    total_databases = len(databases)
+    seen_databases = 0
+    all_databases = []
+    for d in databases:
+        hits = iter_len(s.search(d, ips))
+        all_databases.append((os.path.basename(d), hits))
+        if hits:
+            seen_databases += 1
+
+    return {
+        'total': total_databases,
+        'hits':  seen_databases,
+        'databases':    all_databases,
+    }
+        
+
 TEMPLATE = """
 <!DOCTYPE html>
 <html>
