@@ -21,7 +21,6 @@ setup(name='netflowindexer_web',
     include_package_data=True,
     zip_safe=False,
     install_requires=[
-        "bottle",
         "netflowindexer>=0.1.21",
     ],
     scripts=glob('scripts/*'),
