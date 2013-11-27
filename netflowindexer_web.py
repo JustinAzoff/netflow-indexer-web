@@ -70,7 +70,7 @@ def stats():
         'hits':  seen_databases,
         'databases':    all_databases,
     }
-        
+
 
 TEMPLATE = """
 <!DOCTYPE html>
@@ -177,7 +177,7 @@ def set_config_file(filename):
 def main():
     config = sys.argv[1]
     set_config_file(config)
-    run(app, server='auto', port=8000)
+    run(app, server='auto', host="0.0.0.0", port=8000)
 
 if __name__ == "__main__":
     main()
