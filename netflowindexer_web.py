@@ -143,7 +143,7 @@ function toggle_filter()
 <select id="databases" name="databases" multiple="multiple" size=50>
 %for d in databases:
     <option value="{{d}}">{{d}}</option>
-%end for
+%end
 </select> <br>
 </form>
 <script>
